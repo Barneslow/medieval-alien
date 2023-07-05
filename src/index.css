@@ -5,5 +5,5 @@
 *,
 ::before,
 ::after {
-  box-sizing: border-box; /* 1 */
+  box-sizing: border-box;
 }
