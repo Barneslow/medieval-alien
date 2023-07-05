@@ -11,20 +11,19 @@ export class MapScene extends Phaser.Scene {
   preload() {
     this.load.tilemapTiledJSON("map", mapJson);
     this.load.image("tiles", Sprites);
-    this.load.image('player', playerImage)
+    this.load.spritesheet('player', playerImage, {
+      frameWidth: 32, frameHeight: 38, spacing: 32
+  })
   }
 
   create() {
     // this.createNewGame();
     const map = this.make.tilemap({ key: "map" });
-    const tileset = map.addTilesetImage("main_lev_build_1", "tiles", 16, 16);
-
+    map.addTilesetImage("main_lev_build_1", "tiles", 16, 16);
     const layers = this.createLayers(map)
     layers.platformsColliders.setCollisionByExclusion([-1], true)
-
-    this.player = this.createPlayer()
-    this.physics.add.collider(this.player, layers.platformsColliders);
-    this.cursors = this.input.keyboard.createCursorKeys();
+    const player = this.createPlayer()
+    this.physics.add.collider(player, layers.platformsColliders);
 
   }
 
@@ -39,8 +38,7 @@ export class MapScene extends Phaser.Scene {
 
   createPlayer() {
     const player = new Player(this, 100, 250);
-    player.body.setGravityY(500);
-    player.setCollideWorldBounds(true);
+
     return player;
   
   }

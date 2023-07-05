@@ -13,6 +13,12 @@ const PhaserGame: React.FC = () => {
         width: 1024,
         height: 768,
         parent: gameContainerRef.current,
+        physics: {
+          default: "arcade",
+          arcade: {
+            gravity: { y: 0 },
+          },
+        },
         scene: [MapScene],
       };
 
