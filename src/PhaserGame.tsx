@@ -2,6 +2,9 @@ import Phaser from "phaser";
 import { MapScene } from "./scenes/MapScene";
 import { useEffect, useRef } from "react";
 
+const MAP_WIDTH = 960
+const MAP_HEIGHT = 640
+
 const PhaserGame: React.FC = () => {
   const gameContainerRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Phaser.Game | null>(null);
@@ -10,8 +13,8 @@ const PhaserGame: React.FC = () => {
     if (gameContainerRef.current) {
       const config: Phaser.Types.Core.GameConfig = {
         type: Phaser.AUTO,
-        width: 1024,
-        height: 768,
+        width: MAP_WIDTH,
+        height: MAP_HEIGHT,
         parent: gameContainerRef.current,
         physics: {
           default: "arcade",

@@ -23,7 +23,10 @@ export class MapScene extends Phaser.Scene {
     const layers = this.createLayers(map)
     layers.platformsColliders.setCollisionByExclusion([-1], true)
     const player = this.createPlayer()
-    this.physics.add.collider(player, layers.platformsColliders);
+    this.createPlayerColliders(player, {
+      colliders: {
+      platformsColliders: layers.platformsColliders
+    }})
 
   }
 
@@ -41,6 +44,11 @@ export class MapScene extends Phaser.Scene {
 
     return player;
   
+  }
+
+  createPlayerColliders(player, {colliders}){
+    player.addCollider(colliders.platformsColliders)
+
   }
   
 

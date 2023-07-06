@@ -1,4 +1,4 @@
-export default anims => {
+export default (anims:any) => {
     anims.create({
       key: 'idle',
       frames: anims.generateFrameNumbers('player', {start: 0, end: 8}),
