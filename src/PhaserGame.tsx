@@ -1,20 +1,34 @@
-import Phaser from "phaser";
+import Phaser, { Scene, Scenes } from "phaser";
 import { MapScene } from "./scenes/MapScene";
 import { useEffect, useRef } from "react";
 
-const MAP_WIDTH = 960
-const MAP_HEIGHT = 640
+const MAP_WIDTH = 1600;
+
+const WIDTH = document.body.offsetWidth
+const HEIGHT = 640;
+const SHARED_CONFIG = {
+  mapOffset: MAP_WIDTH > WIDTH ? MAP_WIDTH - WIDTH : 0,
+  width: WIDTH,
+  height: HEIGHT,
+  zoomFactor: 1.5
+}
+
 
 const PhaserGame: React.FC = () => {
   const gameContainerRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<Phaser.Game | null>(null);
 
+  const Scenes = [MapScene]
+
+  const createScene = Scene => new Scene(SHARED_CONFIG)
+  const initScenes = () =>  Scenes.map(createScene)
+
+
   useEffect(() => {
     if (gameContainerRef.current) {
       const config: Phaser.Types.Core.GameConfig = {
         type: Phaser.AUTO,
-        width: MAP_WIDTH,
-        height: MAP_HEIGHT,
+        ...SHARED_CONFIG,
         parent: gameContainerRef.current,
         physics: {
           default: "arcade",
@@ -22,7 +36,7 @@ const PhaserGame: React.FC = () => {
             gravity: { y: 0 },
           },
         },
-        scene: [MapScene],
+        scene: initScenes(),
       };
 
       gameRef.current = new Phaser.Game(config);

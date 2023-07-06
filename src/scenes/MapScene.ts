@@ -4,8 +4,9 @@ import Player from "../classes/Player";
 import playerImage from '../assets/images/player/move_sprite_1.png'
 
 export class MapScene extends Phaser.Scene {
-  constructor() {
+  constructor(config) {
     super("MapScene");
+    this.config = config
   }
 
   preload() {
@@ -28,6 +29,7 @@ export class MapScene extends Phaser.Scene {
       platformsColliders: layers.platformsColliders
     }})
 
+    this.setupFollowCameraOn(player)
   }
 
   createLayers(map: Phaser.Tilemaps.Tilemap) {
@@ -50,7 +52,13 @@ export class MapScene extends Phaser.Scene {
     player.addCollider(colliders.platformsColliders)
 
   }
-  
+
+  setupFollowCameraOn(player){
+    const {height, width, mapOffset, zoomFactor} = this.config
+    this.physics.world.setBounds(0, 0, width + mapOffset, height + 200)
+    this.cameras.main.setBounds(0, 0, width + mapOffset, height).setZoom(zoomFactor)
+    this.cameras.main.startFollow(player)
+  }
 
   update() {}
 }
